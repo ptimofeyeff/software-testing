@@ -11,6 +11,7 @@ repositories {
     mavenCentral()
 }
 dependencies {
+    implementation("org.apache.commons:commons-math3:3.6.1")
     testImplementation("org.junit.jupiter:junit-jupiter:5.7.0")
 }
 tasks.withType<KotlinCompile>() {
@@ -20,5 +21,5 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 application {
-    mainClassName = "MainKt"
+    mainClassName = "Lab1"
 }

@@ -37,7 +37,7 @@ class BTreeTest {
     }
 
     @Test
-    fun removeTest() {
+    fun testRemove() {
         bTree.add(9)
         Assertions.assertTrue(bTree.contains(9))
         bTree.remove(9)

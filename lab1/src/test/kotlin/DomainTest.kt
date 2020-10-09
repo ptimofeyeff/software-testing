@@ -2,14 +2,8 @@ import domain.model.Contamination
 import domain.model.Location
 import domain.model.Noisiness
 import domain.pubishers.Whisper
-import domain.subscribers.acousticDevices.Bin
-import domain.subscribers.acousticDevices.Car
-import domain.subscribers.acousticDevices.Tin
-import domain.subscribers.acousticDevices.Window
-import domain.subscribers.stereoSystems.COMMON_FREQUENCY
-import domain.subscribers.stereoSystems.Radio
-import domain.subscribers.stereoSystems.RecordPlayer
-import domain.subscribers.stereoSystems.TV
+import domain.subscribers.acousticDevices.*
+import domain.subscribers.stereoSystems.*
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.io.ByteArrayOutputStream
@@ -54,7 +48,7 @@ class DomainTest {
 
     @Test
     fun `all frequenceable hear the rang out of comprehensive whisper`() {
-        val hearables = listOf(Radio(), TV(), RecordPlayer())
+        val hearables = listOf(Radio(), TV(), RecordPlayer(), StereoSystem(), LoudSpeaker(), Speaker())
         val whisper = Whisper(Noisiness.LOUDLY, Location.AIR, true, ArrayList(hearables))
         System.setOut(PrintStream(fakeStdout))
 
@@ -62,7 +56,7 @@ class DomainTest {
         hearables.stream()
             .peek { it.toDefaultFrequency() }
             .forEach {
-                Assertions.assertTrue(fakeStdout.toString().contains("$it hear $whisper"))
+                Assertions.assertTrue(fakeStdout.toString().contains("$ln$it hear $whisper"))
             }
 
         System.setOut(stdout)
@@ -70,7 +64,7 @@ class DomainTest {
 
     @Test
     fun `all turnableToAcoustic hear the rang out of comprehensive whisper`() {
-        val hearables = listOf(Bin(), Tin(Contamination.PURE), Window())
+        val hearables = listOf(Bin(), Tin(Contamination.PURE), Window(), Car(), Glass())
         val whisper = Whisper(Noisiness.LOUDLY, Location.AIR, true, ArrayList(hearables))
         System.setOut(PrintStream(fakeStdout))
 
@@ -78,7 +72,7 @@ class DomainTest {
         hearables.stream()
             .peek { it.turnToDefault() }
             .forEach {
-                Assertions.assertTrue(fakeStdout.toString().contains("$it hear $whisper"))
+                Assertions.assertTrue(fakeStdout.toString().contains("$ln$it hear $whisper"))
             }
 
         System.setOut(stdout)
@@ -86,7 +80,7 @@ class DomainTest {
 
     @Test
     fun `all frequenceable turn to common frequency after hear the rang out of comprehensive whisper`() {
-        val hearables = listOf(Radio(), TV(), RecordPlayer())
+        val hearables = listOf(Radio(), TV(), RecordPlayer(), StereoSystem(), LoudSpeaker(), Speaker())
         val whisper = Whisper(Noisiness.LOUDLY, Location.AIR, true, ArrayList(hearables))
         System.setOut(PrintStream(fakeStdout))
 
@@ -94,7 +88,7 @@ class DomainTest {
         hearables.stream()
             .forEach {
                 Assertions.assertTrue(
-                    fakeStdout.toString().contains("$it ${Noisiness.QUITE} turn to frequency $COMMON_FREQUENCY")
+                    fakeStdout.toString().contains("$ln$it ${Noisiness.QUITE} turn to frequency $COMMON_FREQUENCY")
                 )
             }
 
@@ -103,7 +97,7 @@ class DomainTest {
 
     @Test
     fun `all turnableToAcoustic turn to acoustic device after hear the rang out of comprehensive whisper`() {
-        val hearables = listOf(Bin(), Tin(Contamination.PURE), Window())
+        val hearables = listOf(Bin(), Tin(Contamination.PURE), Window(), Car(), Glass())
         val whisper = Whisper(Noisiness.LOUDLY, Location.AIR, true, ArrayList(hearables))
         System.setOut(PrintStream(fakeStdout))
 
@@ -111,7 +105,7 @@ class DomainTest {
         hearables.stream()
             .forEach {
                 Assertions.assertTrue(
-                    fakeStdout.toString().contains("$it turn to acoustic device")
+                    fakeStdout.toString().contains("$ln$it turn to acoustic device")
                 )
             }
 
@@ -121,7 +115,7 @@ class DomainTest {
 
     @Test
     fun `not all frequenceable hear the rang out of not comprehensive whisper`() {
-        val hearables = listOf(Radio(), TV(), RecordPlayer())
+        val hearables = listOf(Radio(), TV(), RecordPlayer(), StereoSystem(), LoudSpeaker(), Speaker())
         val whisper = Whisper(Noisiness.LOUDLY, Location.AIR, false, ArrayList(hearables))
         System.setOut(PrintStream(fakeStdout))
 
@@ -129,9 +123,9 @@ class DomainTest {
         hearables.forEachIndexed { index, it ->
             it.toDefaultFrequency()
             if (index % 2 == 0) {
-                Assertions.assertTrue(fakeStdout.toString().contains("$it hear $whisper"))
+                Assertions.assertTrue(fakeStdout.toString().contains("$ln$it hear $whisper"))
             } else {
-                Assertions.assertFalse(fakeStdout.toString().contains("$it hear $whisper"))
+                Assertions.assertFalse(fakeStdout.toString().contains("$ln$it hear $whisper"))
             }
         }
 
@@ -140,7 +134,7 @@ class DomainTest {
 
     @Test
     fun `not all turnableToAcoustic hear the rang out of not comprehensive whisper`() {
-        val hearables = listOf(Tin(Contamination.PURE), Bin(), Window())
+        val hearables = listOf(Bin(), Tin(Contamination.PURE), Window(), Car(), Glass())
         val whisper = Whisper(Noisiness.LOUDLY, Location.AIR, false, ArrayList(hearables))
         System.setOut(PrintStream(fakeStdout))
 
@@ -148,9 +142,9 @@ class DomainTest {
         hearables.forEachIndexed { index, it ->
             it.turnToDefault()
             if (index % 2 == 0) {
-                Assertions.assertTrue(fakeStdout.toString().contains("$it hear $whisper"))
+                Assertions.assertTrue(fakeStdout.toString().contains("$ln$it hear $whisper"))
             } else {
-                Assertions.assertFalse(fakeStdout.toString().contains("$it hear $whisper"))
+                Assertions.assertFalse(fakeStdout.toString().contains("$ln$it hear $whisper"))
             }
         }
 

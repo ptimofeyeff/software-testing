@@ -14,6 +14,11 @@ data class Tin(
         println("$this turn to acoustic device")
     }
 
+    override fun turnToDefault() {
+        isAcousticDevice = false
+        println("$this turn to default state")
+    }
+
     override fun hear(soundable: Soundable) {
         println("$this hear $soundable")
         turnToAcoustic()
@@ -27,6 +32,11 @@ data class Bin(
     override fun turnToAcoustic() {
         isAcousticDevice = true
         println("$this turn to acoustic device")
+    }
+
+    override fun turnToDefault() {
+        isAcousticDevice = false
+        println("$this turn to default state")
     }
 
     override fun hear(soundable: Soundable) {
@@ -44,19 +54,29 @@ data class Window(
         println("$this turn to acoustic device")
     }
 
+    override fun turnToDefault() {
+        isAcousticDevice = false
+        println("$this turn to default state")
+    }
+
     override fun hear(soundable: Soundable) {
         println("$this hear $soundable")
         turnToAcoustic()
     }
 }
 
-data class Car (
+data class Car(
     private var isAcousticDevice: Boolean = false
 ) : TurnableToAcoustic, Hearable {
 
     override fun turnToAcoustic() {
         isAcousticDevice = true
         println("$this turn to acoustic device")
+    }
+
+    override fun turnToDefault() {
+        isAcousticDevice = false
+        println("$this turn to default state")
     }
 
     override fun hear(soundable: Soundable) {
@@ -72,6 +92,11 @@ data class Glass(
     override fun turnToAcoustic() {
         isAcousticDevice = true
         println("$this turn to acoustic device")
+    }
+
+    override fun turnToDefault() {
+        isAcousticDevice = false
+        println("$this turn to default state")
     }
 
     override fun hear(soundable: Soundable) {

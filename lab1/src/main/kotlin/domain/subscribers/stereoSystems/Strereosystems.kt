@@ -1,14 +1,14 @@
 package domain.subscribers.stereoSystems
 
-import domain.pubishers.Soundable
 import domain.model.Noisiness
-import domain.subscribers.Hearable
+import domain.pubishers.Soundable
 
 const val COMMON_FREQUENCY = 424.3
+const val DEFAULT_FREQUENCY = 100.0
 
 data class StereoSystem(
-    private var frequency: Double = 100.0
-) : Frequenceable, Hearable {
+    private var frequency: Double = DEFAULT_FREQUENCY
+) : Frequenceable {
 
     override fun tuneToFrequency(frequency: Double, noisiness: Noisiness) {
         this.frequency = frequency
@@ -18,12 +18,16 @@ data class StereoSystem(
     override fun hear(soundable: Soundable) {
         println("$this hear $soundable")
         tuneToFrequency(COMMON_FREQUENCY, Noisiness.QUITE)
+    }
+
+    override fun toDefaultFrequency() {
+        this.frequency = DEFAULT_FREQUENCY
     }
 }
 
 data class Radio(
-    private var frequency: Double = 100.0
-) : Frequenceable, Hearable {
+    private var frequency: Double = DEFAULT_FREQUENCY
+) : Frequenceable {
 
     override fun tuneToFrequency(frequency: Double, noisiness: Noisiness) {
         this.frequency = frequency
@@ -33,12 +37,16 @@ data class Radio(
     override fun hear(soundable: Soundable) {
         println("$this hear $soundable")
         tuneToFrequency(COMMON_FREQUENCY, Noisiness.QUITE)
+    }
+
+    override fun toDefaultFrequency() {
+        this.frequency = DEFAULT_FREQUENCY
     }
 }
 
 data class TV(
-    private var frequency: Double = 100.0
-) : Frequenceable, Hearable {
+    private var frequency: Double = DEFAULT_FREQUENCY
+) : Frequenceable {
 
     override fun tuneToFrequency(frequency: Double, noisiness: Noisiness) {
         this.frequency = frequency
@@ -48,12 +56,16 @@ data class TV(
     override fun hear(soundable: Soundable) {
         println("$this hear $soundable")
         tuneToFrequency(COMMON_FREQUENCY, Noisiness.QUITE)
+    }
+
+    override fun toDefaultFrequency() {
+        this.frequency = DEFAULT_FREQUENCY
     }
 }
 
 data class RecordPlayer(
-    private var frequency: Double = 100.0
-) : Frequenceable, Hearable {
+    private var frequency: Double = DEFAULT_FREQUENCY
+) : Frequenceable {
 
     override fun tuneToFrequency(frequency: Double, noisiness: Noisiness) {
         this.frequency = frequency
@@ -63,12 +75,16 @@ data class RecordPlayer(
     override fun hear(soundable: Soundable) {
         println("$this hear $soundable")
         tuneToFrequency(COMMON_FREQUENCY, Noisiness.QUITE)
+    }
+
+    override fun toDefaultFrequency() {
+        this.frequency = DEFAULT_FREQUENCY
     }
 }
 
 data class LoudSpeaker(
-    private var frequency: Double = 100.0
-) : Frequenceable, Hearable {
+    private var frequency: Double = DEFAULT_FREQUENCY
+) : Frequenceable {
 
     override fun tuneToFrequency(frequency: Double, noisiness: Noisiness) {
         this.frequency = frequency
@@ -78,12 +94,16 @@ data class LoudSpeaker(
     override fun hear(soundable: Soundable) {
         println("$this hear $soundable")
         tuneToFrequency(COMMON_FREQUENCY, Noisiness.QUITE)
+    }
+
+    override fun toDefaultFrequency() {
+        this.frequency = DEFAULT_FREQUENCY
     }
 }
 
 data class Speaker(
-    private var frequency: Double = 100.0
-) : Frequenceable, Hearable {
+    private var frequency: Double = DEFAULT_FREQUENCY
+) : Frequenceable {
 
     override fun tuneToFrequency(frequency: Double, noisiness: Noisiness) {
         this.frequency = frequency
@@ -93,5 +113,9 @@ data class Speaker(
     override fun hear(soundable: Soundable) {
         println("$this hear $soundable")
         tuneToFrequency(COMMON_FREQUENCY, Noisiness.QUITE)
+    }
+
+    override fun toDefaultFrequency() {
+        this.frequency = DEFAULT_FREQUENCY
     }
 }

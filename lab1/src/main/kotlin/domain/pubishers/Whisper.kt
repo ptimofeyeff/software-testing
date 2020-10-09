@@ -8,7 +8,7 @@ data class Whisper(
     private var noisiness: Noisiness,
     private var location: Location,
     private var comprehensive: Boolean,
-    private val hearables: ArrayList<Hearable>
+    val hearables: ArrayList<Hearable>
 ) : Soundable {
 
     fun rangOut() {
@@ -30,10 +30,8 @@ data class Whisper(
                 it.hear(this)
             }
         } else {
-            hearables.forEach {
-                if (Math.random() > 0.5) {
-                    it.hear(this)
-                }
+            hearables.forEachIndexed { index, hearable ->
+                if (index % 2 == 0) hearable.hear(this)
             }
         }
     }

@@ -1,3 +1,4 @@
+import domain.main
 import domain.model.Contamination
 import domain.model.Location
 import domain.model.Noisiness
@@ -148,6 +149,42 @@ class DomainTest {
             }
         }
 
+        System.setOut(stdout)
+    }
+
+    @Test
+    fun systemTest() {
+        System.setOut(PrintStream(fakeStdout))
+        main()
+        Assertions.assertTrue(
+            fakeStdout.toString().contains(
+                "rang out Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "Radio(frequency=100.0) hear Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "Radio(frequency=424.3) QUITE turn to frequency 424.3$ln" +
+                        "TV(frequency=100.0) hear Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "TV(frequency=424.3) QUITE turn to frequency 424.3$ln" +
+                        "RecordPlayer(frequency=100.0) hear Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "RecordPlayer(frequency=424.3) QUITE turn to frequency 424.3$ln" +
+                        "LoudSpeaker(frequency=100.0) hear Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "LoudSpeaker(frequency=424.3) QUITE turn to frequency 424.3$ln" +
+                        "Speaker(frequency=100.0) hear Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "Speaker(frequency=424.3) QUITE turn to frequency 424.3$ln" +
+                        "StereoSystem(frequency=100.0) hear Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "StereoSystem(frequency=424.3) QUITE turn to frequency 424.3$ln" +
+                        "Tin(contamination=RUSTY, isAcousticDevice=false) hear Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "Tin(contamination=RUSTY, isAcousticDevice=true) turn to acoustic device$ln" +
+                        "Tin(contamination=PURE, isAcousticDevice=false) hear Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "Tin(contamination=PURE, isAcousticDevice=true) turn to acoustic device$ln" +
+                        "Bin(isAcousticDevice=false) hear Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "Bin(isAcousticDevice=true) turn to acoustic device$ln" +
+                        "Window(isAcousticDevice=false) hear Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "Window(isAcousticDevice=true) turn to acoustic device$ln" +
+                        "Car(isAcousticDevice=false) hear Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "Car(isAcousticDevice=true) turn to acoustic device$ln" +
+                        "Glass(isAcousticDevice=false) hear Whisper(noisiness=LOUDLY, location=AIR, comprehensive=true)$ln" +
+                        "Glass(isAcousticDevice=true) turn to acoustic device"
+            )
+        )
         System.setOut(stdout)
     }
 

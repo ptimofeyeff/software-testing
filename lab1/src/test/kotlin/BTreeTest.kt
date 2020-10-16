@@ -12,16 +12,20 @@ class BTreeTest {
     }
 
     @Test
-    fun testAdd() {
-        bTree.add(3)
-        bTree.add(6)
-        bTree.add(1)
-        bTree.add(7)
-        bTree.add(Int.MIN_VALUE)
-        bTree.add(Int.MAX_VALUE)
-        Assertions.assertTrue(bTree.toCollection().containsAll(listOf(3, 6, 1, 7, Int.MIN_VALUE, Int.MAX_VALUE)))
-        Assertions.assertEquals(6, bTree.toCollection().size)
+    fun testAddConsistently() {
+        for (i in 1..1000) { bTree.add(i) }
+        for (i in 1..100) { Assertions.assertTrue(bTree.contains(i)) }
+        Assertions.assertEquals(1000, bTree.size())
     }
+
+    @Test
+    fun testAddInMiddle() {
+        for (i in 1..1000) { bTree.add(i) }
+        for (i in 500..1500) { bTree.add(i) }
+        for (i in 1..100) { Assertions.assertTrue(bTree.contains(i)) }
+        Assertions.assertEquals(2001, bTree.size())
+    }
+
 
     @Test
     fun testContains() {
@@ -37,11 +41,21 @@ class BTreeTest {
     }
 
     @Test
-    fun testRemove() {
-        bTree.add(9)
-        Assertions.assertTrue(bTree.contains(9))
-        bTree.remove(9)
-        Assertions.assertFalse(bTree.contains(9))
+    fun testRemoveConsistently() {
+        for (i in 1..1000) { bTree.add(i) }
+        for (i in 1..100) { Assertions.assertTrue(bTree.contains(i)) }
+        for (i in 1000 downTo 1) { bTree.remove(i) }
+        for (i in 1..1000) { Assertions.assertFalse(bTree.contains(i)) }
+    }
+
+
+    @Test
+    fun testRemoveFromParentNode() {
+        for (i in 1..1000) { bTree.add(i) }
+        for (i in 1..100) { Assertions.assertTrue(bTree.contains(i)) }
+        bTree.remove(125)
+        for (i in 1000 downTo 1) { bTree.remove(i) }
+        for (i in 1..1000) { Assertions.assertFalse(bTree.contains(i)) }
     }
 
     @Test

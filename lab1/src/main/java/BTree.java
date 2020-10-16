@@ -1,7 +1,5 @@
-import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Deque;
 
 @SuppressWarnings("uncheked")
 public class BTree<T extends Comparable<T>> {
@@ -15,11 +13,6 @@ public class BTree<T extends Comparable<T>> {
     private Node<T> root = null;
     private int size = 0;
 
-    /**
-     * Constructor for B-Tree which defaults to a 2-3 B-Tree.
-     */
-    public BTree() {
-    }
 
     /**
      * Constructor for B-Tree of ordered parameter. Order here means minimum
@@ -226,8 +219,6 @@ public class BTree<T extends Comparable<T>> {
             if (value.compareTo(lesser) < 0) {
                 if (node.numberOfChildren() > 0)
                     node = node.getChild(0);
-                else
-                    node = null;
                 continue;
             }
 
@@ -298,18 +289,7 @@ public class BTree<T extends Comparable<T>> {
         }
 
         // Try to borrow neighbor
-        if (rightNeighbor != null && rightNeighborSize > minKeySize) {
-            // Try to borrow from right neighbor
-            T removeValue = rightNeighbor.getKey(0);
-            int prev = getIndexOfPreviousValue(parent, removeValue);
-            T parentValue = parent.removeKey(prev);
-            T neighborValue = rightNeighbor.removeKey(0);
-            node.addKey(parentValue);
-            parent.addKey(neighborValue);
-            if (rightNeighbor.numberOfChildren() > 0) {
-                node.addChild(rightNeighbor.removeChild(0));
-            }
-        } else {
+        if (!(rightNeighbor != null && rightNeighborSize > minKeySize)) {
             Node<T> leftNeighbor = null;
             int leftNeighborSize = -minChildrenSize;
             if (indexOfLeftNeighbor >= 0) {
@@ -420,104 +400,6 @@ public class BTree<T extends Comparable<T>> {
         return size;
     }
 
-    public boolean validate() {
-        if (root == null) return true;
-        return validateNode(root);
-    }
-
-    /**
-     * Validate the node according to the B-Tree invariants.
-     *
-     * @param node to validate.
-     * @return True if valid.
-     */
-    private boolean validateNode(Node<T> node) {
-        int keySize = node.numberOfKeys();
-        if (keySize > 1) {
-            // Make sure the keys are sorted
-            for (int i = 1; i < keySize; i++) {
-                T p = node.getKey(i - 1);
-                T n = node.getKey(i);
-                if (p.compareTo(n) > 0)
-                    return false;
-            }
-        }
-        int childrenSize = node.numberOfChildren();
-        if (node.parent == null) {
-            // root
-            if (keySize > maxKeySize) {
-                // check max key size. root does not have a min key size
-                return false;
-            } else if (childrenSize == 0) {
-                // if root, no children, and keys are valid
-                return true;
-            } else if (childrenSize < 2) {
-                // root should have zero or at least two children
-                return false;
-            } else if (childrenSize > maxChildrenSize) {
-                return false;
-            }
-        } else {
-            // non-root
-            if (keySize < minKeySize) {
-                return false;
-            } else if (keySize > maxKeySize) {
-                return false;
-            } else if (childrenSize == 0) {
-                return true;
-            } else if (keySize != (childrenSize - 1)) {
-                // If there are chilren, there should be one more child then
-                // keys
-                return false;
-            } else if (childrenSize < minChildrenSize) {
-                return false;
-            } else if (childrenSize > maxChildrenSize) {
-                return false;
-            }
-        }
-
-        Node<T> first = node.getChild(0);
-        // The first child's last key should be less than the node's first key
-        if (first.getKey(first.numberOfKeys() - 1).compareTo(node.getKey(0)) > 0)
-            return false;
-
-        Node<T> last = node.getChild(node.numberOfChildren() - 1);
-        // The last child's first key should be greater than the node's last key
-        if (last.getKey(0).compareTo(node.getKey(node.numberOfKeys() - 1)) < 0)
-            return false;
-
-        // Check that each node's first and last key holds it's invariance
-        for (int i = 1; i < node.numberOfKeys(); i++) {
-            T p = node.getKey(i - 1);
-            T n = node.getKey(i);
-            Node<T> c = node.getChild(i);
-            if (p.compareTo(c.getKey(0)) > 0)
-                return false;
-            if (n.compareTo(c.getKey(c.numberOfKeys() - 1)) < 0)
-                return false;
-        }
-
-        for (int i = 0; i < node.childrenSize; i++) {
-            Node<T> c = node.getChild(i);
-            boolean valid = this.validateNode(c);
-            if (!valid)
-                return false;
-        }
-
-        return true;
-    }
-
-    public java.util.Collection<T> toCollection() {
-        return (new JavaCompatibleBTree<T>(this));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return TreePrinter.getString(this);
-    }
 
     private static class Node<T extends Comparable<T>> {
 
@@ -653,174 +535,5 @@ public class BTree<T extends Comparable<T>> {
             return childrenSize;
         }
 
-        @Override
-        public String toString() {
-            StringBuilder builder = new StringBuilder();
-
-            builder.append("keys=[");
-            for (int i = 0; i < numberOfKeys(); i++) {
-                T value = getKey(i);
-                builder.append(value);
-                if (i < numberOfKeys() - 1)
-                    builder.append(", ");
-            }
-            builder.append("]\n");
-
-            if (parent != null) {
-                builder.append("parent=[");
-                for (int i = 0; i < parent.numberOfKeys(); i++) {
-                    T value = parent.getKey(i);
-                    builder.append(value);
-                    if (i < parent.numberOfKeys() - 1)
-                        builder.append(", ");
-                }
-                builder.append("]\n");
-            }
-
-            if (children != null) {
-                builder.append("keySize=").append(numberOfKeys()).append(" children=").append(numberOfChildren()).append("\n");
-            }
-
-            return builder.toString();
-        }
-    }
-
-    private static class TreePrinter {
-
-        public static <T extends Comparable<T>> String getString(BTree<T> tree) {
-            if (tree.root == null) return "Tree has no nodes.";
-            return getString(tree.root, "", true);
-        }
-
-        private static <T extends Comparable<T>> String getString(Node<T> node, String prefix, boolean isTail) {
-            StringBuilder builder = new StringBuilder();
-
-            builder.append(prefix).append((isTail ? "└── " : "├── "));
-            for (int i = 0; i < node.numberOfKeys(); i++) {
-                T value = node.getKey(i);
-                builder.append(value);
-                if (i < node.numberOfKeys() - 1)
-                    builder.append(", ");
-            }
-            builder.append("\n");
-
-            if (node.children != null) {
-                for (int i = 0; i < node.numberOfChildren() - 1; i++) {
-                    Node<T> obj = node.getChild(i);
-                    builder.append(getString(obj, prefix + (isTail ? "    " : "│   "), false));
-                }
-                if (node.numberOfChildren() >= 1) {
-                    Node<T> obj = node.getChild(node.numberOfChildren() - 1);
-                    builder.append(getString(obj, prefix + (isTail ? "    " : "│   "), true));
-                }
-            }
-
-            return builder.toString();
-        }
-    }
-
-    public static class JavaCompatibleBTree<T extends Comparable<T>> extends java.util.AbstractCollection<T> {
-
-        private BTree<T> tree = null;
-
-        public JavaCompatibleBTree(BTree<T> tree) {
-            this.tree = tree;
-        }
-
-        @Override
-        public boolean add(T value) {
-            return tree.add(value);
-        }
-
-        @Override
-        public boolean remove(Object value) {
-            return (tree.remove((T) value) != null);
-        }
-
-        @Override
-        public boolean contains(Object value) {
-            return tree.contains((T) value);
-        }
-
-        @Override
-        public int size() {
-            return tree.size();
-        }
-
-        @Override
-        public java.util.Iterator<T> iterator() {
-            return (new BTreeIterator<T>(this.tree));
-        }
-
-        private static class BTreeIterator<C extends Comparable<C>> implements java.util.Iterator<C> {
-
-            private BTree<C> tree = null;
-            private BTree.Node<C> lastNode = null;
-            private C lastValue = null;
-            private int index = 0;
-            private Deque<Node<C>> toVisit = new ArrayDeque<Node<C>>();
-
-            protected BTreeIterator(BTree<C> tree) {
-                this.tree = tree;
-                if (tree.root != null && tree.root.keysSize > 0) {
-                    toVisit.add(tree.root);
-                }
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public boolean hasNext() {
-                if ((lastNode != null && index < lastNode.keysSize) || (toVisit.size() > 0)) return true;
-                return false;
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public C next() {
-                if (lastNode != null && (index < lastNode.keysSize)) {
-                    lastValue = lastNode.getKey(index++);
-                    return lastValue;
-                }
-                while (toVisit.size() > 0) {
-                    // Go thru the current nodes
-                    BTree.Node<C> n = toVisit.pop();
-
-                    // Add non-null children
-                    for (int i = 0; i < n.childrenSize; i++) {
-                        toVisit.add(n.getChild(i));
-                    }
-
-                    // Update last node (used in remove method)
-                    index = 0;
-                    lastNode = n;
-                    lastValue = lastNode.getKey(index++);
-                    return lastValue;
-                }
-                return null;
-            }
-
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void remove() {
-                if (lastNode != null && lastValue != null) {
-                    // On remove, reset the iterator (very inefficient, I know)
-                    tree.remove(lastValue, lastNode);
-
-                    lastNode = null;
-                    lastValue = null;
-                    index = 0;
-                    toVisit.clear();
-                    if (tree.root != null && tree.root.keysSize > 0) {
-                        toVisit.add(tree.root);
-                    }
-                }
-            }
-        }
     }
 }

@@ -1,0 +1,6 @@
+x,base,precision
+NaN,2,0.00000001
+-Infinity,10,0.00000001
+2,3,NaN
+2,4,Infinity
+2,5,-Infinity

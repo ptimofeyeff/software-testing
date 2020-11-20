@@ -8,7 +8,7 @@ interface INaturalLogarithmApprox {
 object NaturalLogarithmApprox : INaturalLogarithmApprox {
 
     override fun ln(x: Double, precision: Double): Double {
-        if (x <= 0 || x <= precision || x.isNaN() || precision.isNaN() || precision.isInfinite())
+        if (x <= 0 || x <= precision || !x.isFinite() || !precision.isFinite())
             throw UnsupportedValueException()
         if (x < 1) {
             val z = x - 1

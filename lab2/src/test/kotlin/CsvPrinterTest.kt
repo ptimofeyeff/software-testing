@@ -9,7 +9,7 @@ class CsvPrinterTest {
 
     private val trigFunctions = TrigonometricFunctions(SinApprox)
     private val logFunctions = LogarithmicFunctions(NaturalLogarithmApprox)
-    private val mainFunction = SystemOfFunction(trigFunctions, logFunctions)
+    private val mainFunction = SystemOfFunctions(trigFunctions, logFunctions)
     lateinit var outPath: String
 
     @BeforeEach

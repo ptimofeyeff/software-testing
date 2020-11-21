@@ -13,7 +13,7 @@ object SinApprox : ISinApprox {
         var current = x
         var n = 1
 
-        while (abs(current) >= precision) {
+        while (abs(current) > precision) {
             result += current
             current *= -(x * x) / (2 * n * (2 * n + 1))
             n++

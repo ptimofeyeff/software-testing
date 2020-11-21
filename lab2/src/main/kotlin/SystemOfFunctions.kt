@@ -1,6 +1,6 @@
 import kotlin.math.pow
 
-class SystemOfFunction(
+class SystemOfFunctions(
     private val trigFun: ITrigonometricFunctions,
     private val logFun: ILogarithmicFunctions
 ) {
@@ -9,7 +9,7 @@ class SystemOfFunction(
             val cosX = trigFun.cos(x, precision)
             val tanX = trigFun.tan(x, precision)
             val cotX = trigFun.cot(x, precision)
-            (((cosX + tanX + cosX) / cotX) + (cosX.pow(3)) * cotX)
+            (((cosX + tanX + cosX) / cotX) + (cosX.pow(3))) * cotX
         } else {
             val log10x = logFun.logN(x, 10.0, precision)
             val log2x = logFun.logN(x, 2.0, precision)

@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test
 import kotlin.math.*
 
 class FunctionsTest {
-    private val trigonometricFunction = TrigonometricFunction(SinApprox)
+    private val trigonometricFunction = TrigonometricFunctions(SinApprox)
 
     private val logarithmicFunctions = LogarithmicFunctions(NaturalLogarithmApprox)
 

@@ -1,7 +1,7 @@
 import kotlin.math.pow
 
 class SystemOfFunction(
-    private val trigFun: ITrigonometricFunction,
+    private val trigFun: ITrigonometricFunctions,
     private val logFun: ILogarithmicFunctions
 ) {
     fun compute(x: Double, precision: Double) =

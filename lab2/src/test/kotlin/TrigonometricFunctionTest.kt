@@ -21,7 +21,7 @@ class TrigonometricFunctionTest {
         ) {
             val mockSinApprox = Mockito.mock(ISinApprox::class.java)
             Mockito.`when`(mockSinApprox.sin(eq(x), anyDouble())).thenReturn(sin)
-            Assertions.assertEquals(sin, TrigonometricFunction(mockSinApprox).sin(x, precision), precision)
+            Assertions.assertEquals(sin, TrigonometricFunctions(mockSinApprox).sin(x, precision), precision)
         }
 
         @ParameterizedTest
@@ -38,7 +38,7 @@ class TrigonometricFunctionTest {
             Mockito.`when`(mockSinApprox.sin(eq(x), anyDouble())).thenReturn(sin)
             Mockito.`when`(mockSinApprox.sin(eq(x + Math.PI / 2), anyDouble())).thenReturn(cos)
 
-            Assertions.assertEquals(tan, TrigonometricFunction(mockSinApprox).tan(x, precision), precision)
+            Assertions.assertEquals(tan, TrigonometricFunctions(mockSinApprox).tan(x, precision), precision)
         }
 
         @ParameterizedTest
@@ -55,7 +55,7 @@ class TrigonometricFunctionTest {
             Mockito.`when`(mockSinApprox.sin(eq(x), anyDouble())).thenReturn(sin)
             Mockito.`when`(mockSinApprox.sin(eq(x + Math.PI / 2), anyDouble())).thenReturn(cos)
 
-            Assertions.assertEquals(cot, TrigonometricFunction(mockSinApprox).cot(x, precision), precision)
+            Assertions.assertEquals(cot, TrigonometricFunctions(mockSinApprox).cot(x, precision), precision)
         }
 
 
@@ -76,16 +76,16 @@ class TrigonometricFunctionTest {
                 .thenThrow(UnsupportedValueException::class.java)
 
             Assertions.assertThrows(UnsupportedValueException::class.java) {
-                TrigonometricFunction(mockSinApprox).sin(x, precision)
+                TrigonometricFunctions(mockSinApprox).sin(x, precision)
             }
             Assertions.assertThrows(UnsupportedValueException::class.java) {
-                TrigonometricFunction(mockSinApprox).cos(x, precision)
+                TrigonometricFunctions(mockSinApprox).cos(x, precision)
             }
             Assertions.assertThrows(UnsupportedValueException::class.java) {
-                TrigonometricFunction(mockSinApprox).tan(x, precision)
+                TrigonometricFunctions(mockSinApprox).tan(x, precision)
             }
             Assertions.assertThrows(UnsupportedValueException::class.java) {
-                TrigonometricFunction(mockSinApprox).cot(x, precision)
+                TrigonometricFunctions(mockSinApprox).cot(x, precision)
             }
         }
     }
@@ -103,7 +103,7 @@ class TrigonometricFunctionTest {
             cot: Double,
             precision: Double
         ) {
-            Assertions.assertEquals(sin, TrigonometricFunction(SinApprox).sin(x, precision), precision)
+            Assertions.assertEquals(sin, TrigonometricFunctions(SinApprox).sin(x, precision), precision)
         }
 
         @ParameterizedTest
@@ -116,7 +116,7 @@ class TrigonometricFunctionTest {
             cot: Double,
             precision: Double
         ) {
-            Assertions.assertEquals(tan, TrigonometricFunction(SinApprox).tan(x, precision), precision)
+            Assertions.assertEquals(tan, TrigonometricFunctions(SinApprox).tan(x, precision), precision)
         }
 
         @ParameterizedTest
@@ -129,7 +129,7 @@ class TrigonometricFunctionTest {
             cot: Double,
             precision: Double
         ) {
-            Assertions.assertEquals(cot, TrigonometricFunction(SinApprox).cot(x, precision), precision)
+            Assertions.assertEquals(cot, TrigonometricFunctions(SinApprox).cot(x, precision), precision)
         }
 
         @ParameterizedTest
@@ -143,16 +143,16 @@ class TrigonometricFunctionTest {
             precision: Double
         ) {
             Assertions.assertThrows(UnsupportedValueException::class.java) {
-                TrigonometricFunction(SinApprox).sin(x, precision)
+                TrigonometricFunctions(SinApprox).sin(x, precision)
             }
             Assertions.assertThrows(UnsupportedValueException::class.java) {
-                TrigonometricFunction(SinApprox).cos(x, precision)
+                TrigonometricFunctions(SinApprox).cos(x, precision)
             }
             Assertions.assertThrows(UnsupportedValueException::class.java) {
-                TrigonometricFunction(SinApprox).tan(x, precision)
+                TrigonometricFunctions(SinApprox).tan(x, precision)
             }
             Assertions.assertThrows(UnsupportedValueException::class.java) {
-                TrigonometricFunction(SinApprox).cot(x, precision)
+                TrigonometricFunctions(SinApprox).cot(x, precision)
             }
         }
     }

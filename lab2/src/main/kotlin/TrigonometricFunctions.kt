@@ -1,15 +1,15 @@
 import kotlin.math.*
 
-interface ITrigonometricFunction {
+interface ITrigonometricFunctions {
     fun sin(x: Double, precision: Double): Double
     fun cos(x: Double, precision: Double): Double
     fun tan(x: Double, precision: Double): Double
     fun cot(x: Double, precision: Double): Double
 }
 
-class TrigonometricFunction(
+class TrigonometricFunctions(
     private val sinApprox: ISinApprox
-) : ITrigonometricFunction {
+) : ITrigonometricFunctions {
 
     override fun sin(x: Double, precision: Double): Double {
         val sin = sinApprox.sin(x, precision)

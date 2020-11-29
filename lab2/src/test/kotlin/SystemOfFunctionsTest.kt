@@ -24,6 +24,7 @@ class SystemOfFunctionsTest {
         log2: Double,
         log3: Double,
         log10: Double,
+        lnX: Double,
         precision: Double
     ): ILogarithmicFunctions = Mockito.mock(ILogarithmicFunctions::class.java).apply {
         Mockito.`when`(logN(ArgumentMatchers.eq(x), ArgumentMatchers.eq(2.0), ArgumentMatchers.eq(precision)))
@@ -32,6 +33,8 @@ class SystemOfFunctionsTest {
             .thenReturn(log3)
         Mockito.`when`(logN(ArgumentMatchers.eq(x), ArgumentMatchers.eq(10.0), ArgumentMatchers.eq(precision)))
             .thenReturn(log10)
+        Mockito.`when`(ln(ArgumentMatchers.eq(x), ArgumentMatchers.eq(precision)))
+            .thenReturn(lnX)
     }
 
     @Nested
@@ -47,10 +50,11 @@ class SystemOfFunctionsTest {
             log2: Double,
             log3: Double,
             log10: Double,
+            lnX: Double,
             precision: Double
         ) {
             val mockTrig = mockTrigFunctions(x, cos, tan, cot, precision)
-            val mockLog = mockLogFunction(x, log2, log3, log10, precision)
+            val mockLog = mockLogFunction(x, log2, log3, log10, lnX, precision)
 
             Assertions.assertEquals(y, SystemOfFunctions(mockTrig, mockLog).compute(x, precision), precision)
         }
@@ -66,6 +70,7 @@ class SystemOfFunctionsTest {
             log2: Double,
             log3: Double,
             log10: Double,
+            lnX: Double,
             precision: Double
         ) {
             val mockTrig = mockTrigFunctions(x, cos, tan, cot, precision)
@@ -85,16 +90,17 @@ class SystemOfFunctionsTest {
             log2: Double,
             log3: Double,
             log10: Double,
+            lnX: Double,
             precision: Double
         ) {
             val trigonometricFunctions = TrigonometricFunctions(SinApprox)
-            val mockLog = mockLogFunction(x, log2, log3, log10, precision)
+            val mockLog = mockLogFunction(x, log2, log3, log10, lnX, precision)
 
             Assertions.assertEquals(y, SystemOfFunctions(trigonometricFunctions, mockLog).compute(x, precision), precision)
         }
 
         @ParameterizedTest
-        @CsvFileSource(resources = ["/main-fun.csv"], numLinesToSkip = 1)
+        @CsvFileSource(resources = ["/main-fun.csv"], numLinesToSkip = 18)
         fun `it integrates both modules`(
             x: Double,
             y: Double,
@@ -104,6 +110,7 @@ class SystemOfFunctionsTest {
             log2: Double,
             log3: Double,
             log10: Double,
+            lnX: Double,
             precision: Double
         ) {
             val trigonometricFunctions = TrigonometricFunctions(SinApprox)

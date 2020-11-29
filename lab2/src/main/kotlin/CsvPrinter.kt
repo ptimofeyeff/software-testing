@@ -42,7 +42,7 @@ fun printCsv(
         "(%.8f;%.8f)".format(Locale.ENGLISH, x, y)
     }
     File(outFilePath).writeText(csv)
-    if (toTableView) File("testFile").writeText(graphicView)
+    if (toTableView) File("tableFunc").writeText(graphicView)
 }
 
 private fun Double.roundToPlaces(places: Int) = "%.${places}f".format(Locale.ENGLISH, this).toDouble()
@@ -51,5 +51,5 @@ private fun Double.getCountOfDigits() = abs(log10(this).toInt())
 
 
 fun main() {
-    printCsv("log2", 0.05, 0.05, 200, toTableView = true)
+    printCsv("f", -5.0, 0.05, 500, toTableView = true)
 }

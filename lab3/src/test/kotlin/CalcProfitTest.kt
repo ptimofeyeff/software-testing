@@ -1,24 +1,24 @@
-import helpers.RunWithChrome
-import helpers.RunWithFirefox
-import helpers.WebDriverTemplateInvocationContextProvider
+import helpers.WebDriverArgumentsProvider
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.TestTemplate
-import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ArgumentsSource
 import org.openqa.selenium.WebDriver
 import pages.MainPage
+import java.util.concurrent.TimeUnit
 
-@ExtendWith(WebDriverTemplateInvocationContextProvider::class)
+
 class CalcProfitTest {
 
-
-    @TestTemplate
-    @RunWithFirefox
-    @RunWithChrome
+    @ParameterizedTest
+    @ArgumentsSource(WebDriverArgumentsProvider::class)
     fun `it display potential profit of user`(driver: WebDriver) {
-        val mainPage = MainPage(driver)
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS)
 
+        val mainPage = MainPage(driver)
         mainPage.calcProfit()
+
         Assertions.assertEquals("Ваш потенциальный годовой доход*", mainPage.resultProfit.text)
+
         Thread.sleep(1000)
         driver.quit()
     }

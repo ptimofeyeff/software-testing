@@ -8,7 +8,7 @@ class RegisterPage(
 ) {
 
     fun registration() {
-        val urlField =  driver.findElement(By.xpath("(//input)[1]"))
+        val urlField = driver.findElement(By.xpath("(//input)[1]"))
         val emailField = driver.findElement(By.xpath("(//input)[2]"))
         val spamRadio = driver.findElement(By.xpath("(//material-icon)[3]"))
         val saveAndResumeButton = driver.findElement(By.xpath("//material-button[@debugid='submit-button']"))

@@ -1,14 +1,16 @@
-import helpers.WebDriverArgumentsProvider
+import helpers.RunWithChrome
+import helpers.RunWithFirefox
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ArgumentsSource
 import org.openqa.selenium.WebDriver
 import pages.MainPage
 
 class WatchStoriesTest {
 
+
     @ParameterizedTest
-    @ArgumentsSource(WebDriverArgumentsProvider::class)
+    @RunWithChrome
+    @RunWithFirefox
     fun `it playback success stories`(driver: WebDriver) {
         val mainPage = MainPage(driver)
         mainPage.watchSuccessStories()

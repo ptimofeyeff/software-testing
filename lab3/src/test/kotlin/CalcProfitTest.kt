@@ -1,7 +1,7 @@
-import helpers.WebDriverArgumentsProvider
+import helpers.RunWithChrome
+import helpers.RunWithFirefox
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ArgumentsSource
 import org.openqa.selenium.WebDriver
 import pages.MainPage
 import java.util.concurrent.TimeUnit
@@ -10,7 +10,8 @@ import java.util.concurrent.TimeUnit
 class CalcProfitTest {
 
     @ParameterizedTest
-    @ArgumentsSource(WebDriverArgumentsProvider::class)
+    @RunWithChrome
+    @RunWithFirefox
     fun `it display potential profit of user`(driver: WebDriver) {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS)
 

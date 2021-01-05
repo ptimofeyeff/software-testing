@@ -1,7 +1,7 @@
-import helpers.WebDriverArgumentsProvider
+import helpers.RunWithChrome
+import helpers.RunWithFirefox
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ArgumentsSource
 import org.openqa.selenium.WebDriver
 import pages.GoogleCreateAccountPage
 import pages.MainPage
@@ -13,7 +13,8 @@ class RegistrationTest {
     private val TEST_EMAIL = "jirediv919@aranelab.com"
 
     @ParameterizedTest
-    @ArgumentsSource(WebDriverArgumentsProvider::class)
+    @RunWithFirefox
+    @RunWithChrome
     fun `it send verification code for specified email`(driver: WebDriver) {
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS)

@@ -1,3 +1,5 @@
+package usecases
+
 import helpers.RunWithChrome
 import helpers.RunWithFirefox
 import org.junit.jupiter.api.Assertions
@@ -8,7 +10,7 @@ import pages.GoogleCreateAccountPage
 import pages.MainPage
 import pages.RegisterPage
 
-class RegistrationTest {
+class Registration {
 
     private val testName = "Pavel"
     private val testSoname = "Timofeev"

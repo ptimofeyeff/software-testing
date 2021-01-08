@@ -1,3 +1,5 @@
+package usecases
+
 import helpers.RunWithChrome
 import helpers.RunWithFirefox
 import org.junit.jupiter.api.Assertions

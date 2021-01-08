@@ -1,3 +1,5 @@
+package usecases
+
 import helpers.RunWithChrome
 import helpers.RunWithFirefox
 import org.junit.jupiter.api.Assertions
@@ -7,7 +9,7 @@ import pages.MainPage
 import java.util.concurrent.TimeUnit
 
 
-class CalcProfitTest {
+class CheckPotentialProfit {
 
     @ParameterizedTest
     @RunWithChrome

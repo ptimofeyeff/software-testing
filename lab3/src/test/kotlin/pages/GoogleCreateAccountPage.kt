@@ -2,28 +2,25 @@ package pages
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.support.ui.ExpectedConditions
+import org.openqa.selenium.support.ui.WebDriverWait
 
 class GoogleCreateAccountPage(
     private val driver: WebDriver,
-    private val TEST_EMAIL: String
+    private val testName: String,
+    private val testSoname: String,
+    private val testPassword: String,
+    private val testEmail: String
 ) {
+    fun createAccount() {
+        WebDriverWait(driver, 10)
+            .until(ExpectedConditions.urlContains("https://accounts.google.com/signup/v2/webcreateaccount"))
 
-    fun createAccount(): String {
-        val firstNameInput = driver.findElement(By.id("firstName"))
-        val lastNameInput = driver.findElement(By.id("lastName"))
-        val emailInput = driver.findElement(By.id("username"))
-        val passwordInput = driver.findElement(By.xpath("//input[@name='Passwd']"))
-        val confirmPasswordInput = driver.findElement(By.xpath("//input[@name='ConfirmPasswd']"))
-        val nextButton = driver.findElement(By.xpath("(//button)[2]"))
-
-        firstNameInput.sendKeys("Pavel")
-        lastNameInput.sendKeys("Timofeev")
-        emailInput.clear()
-        emailInput.sendKeys(TEST_EMAIL)
-        passwordInput.sendKeys("testPassword")
-        confirmPasswordInput.sendKeys("testPassword")
-        nextButton.click()
-
-        return driver.findElement(By.xpath("//div[@class='PrDSKc']")).getAttribute("innerHTML")
+        driver.findElement(By.id("firstName")).sendKeys(testName)
+        driver.findElement(By.id("lastName")).sendKeys(testSoname)
+        driver.findElement(By.id("username")).apply { clear(); sendKeys(testEmail) }
+        driver.findElement(By.xpath("//input[@name='Passwd']")).sendKeys(testPassword)
+        driver.findElement(By.xpath("//input[@name='ConfirmPasswd']")).sendKeys(testPassword)
+        driver.findElement(By.xpath("(//button)[2]")).click()
     }
 }

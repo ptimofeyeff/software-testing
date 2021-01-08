@@ -7,8 +7,7 @@ import pages.MainPage
 
 class WatchStoriesTest {
 
-
-    @ParameterizedTest
+    //@ParameterizedTest
     @RunWithChrome
     @RunWithFirefox
     fun `it playback success stories`(driver: WebDriver) {

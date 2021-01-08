@@ -13,7 +13,7 @@ class CalcProfitTest {
     @RunWithChrome
     @RunWithFirefox
     fun `it display potential profit of user`(driver: WebDriver) {
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS)
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
 
         val mainPage = MainPage(driver)
         mainPage.calcProfit()

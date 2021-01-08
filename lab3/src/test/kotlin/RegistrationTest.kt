@@ -3,30 +3,31 @@ import helpers.RunWithFirefox
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.openqa.selenium.WebDriver
+import pages.EmailVerifyPage
 import pages.GoogleCreateAccountPage
 import pages.MainPage
 import pages.RegisterPage
-import java.util.concurrent.TimeUnit
 
 class RegistrationTest {
 
-    private val TEST_EMAIL = "jirediv919@aranelab.com"
+    private val testName = "Pavel"
+    private val testSoname = "Timofeev"
+    private val testEmail = "labTest@test.com"
+    private val testPassword = "testPassword"
 
     @ParameterizedTest
     @RunWithFirefox
     @RunWithChrome
     fun `it send verification code for specified email`(driver: WebDriver) {
 
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS)
-
         MainPage(driver).startWork()
         RegisterPage(driver).registration()
+        GoogleCreateAccountPage(driver, testName, testSoname, testPassword, testEmail).createAccount()
 
-        val confirmCodeText = GoogleCreateAccountPage(driver, TEST_EMAIL).createAccount()
-
+        val confirmText = EmailVerifyPage(driver).getConfirmationText()
         Assertions.assertEquals("""
-            Введите код подтверждения, отправленный на адрес $TEST_EMAIL. Если письма нет во входящих, проверьте папку "Спам".
-        """.trimIndent(), confirmCodeText)
+            Введите код подтверждения, отправленный на адрес $testEmail. Если письма нет во входящих, проверьте папку "Спам".
+        """.trimIndent(), confirmText)
 
         Thread.sleep(1000)
         driver.quit()

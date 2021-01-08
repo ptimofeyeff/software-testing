@@ -2,21 +2,26 @@ package pages
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
+import org.openqa.selenium.support.ui.ExpectedConditions
+import org.openqa.selenium.support.ui.WebDriverWait
 
 class RegisterPage(
     private val driver: WebDriver
 ) {
 
     fun registration() {
-        val urlField = driver.findElement(By.xpath("(//input)[1]"))
-        val emailField = driver.findElement(By.xpath("(//input)[2]"))
-        val spamRadio = driver.findElement(By.xpath("(//material-icon)[3]"))
-        val saveAndResumeButton = driver.findElement(By.xpath("//material-button[@debugid='submit-button']"))
+        WebDriverWait(driver, 10)
+            .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input)[1]")))
+            .sendKeys("testLab.com")
 
-        urlField.sendKeys("testLab.com")
-        emailField.sendKeys("jirediv919@aranelab.com")
-        spamRadio.click()
-        saveAndResumeButton.click()
+        driver.findElement(By.xpath("(//input)[2]"))
+            .sendKeys("jirediv919@aranelab.com")
 
+        WebDriverWait(driver, 10)
+            .until(ExpectedConditions.elementToBeClickable(By.xpath("(//material-icon)[3]")))
+            .click()
+
+        driver.findElement(By.xpath("//material-button[@debugid='submit-button']"))
+            .click()
     }
 }

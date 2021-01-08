@@ -39,8 +39,7 @@ class MainPage(
     }
 
     fun startWork() {
-        val signUpButton = driver.findElement(By.xpath("(//a[@href='https://www.google.com/adsense/signup'])[1]"))
-        signUpButton.click()
+        driver.findElement(By.xpath("(//a[@href='https://www.google.com/adsense/signup'])[1]")).click()
     }
 
     fun watchSuccessStories(){

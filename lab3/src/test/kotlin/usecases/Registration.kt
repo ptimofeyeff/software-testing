@@ -16,6 +16,7 @@ class Registration {
     private val testSoname = "Timofeev"
     private val testEmail = "labTest@test.com"
     private val testPassword = "testPassword"
+    private val targetSiteUrl = "testLab.com"
 
     @ParameterizedTest
     @RunWithFirefox
@@ -23,7 +24,7 @@ class Registration {
     fun `it send verification code for specified email`(driver: WebDriver) {
 
         MainPage(driver).startWork()
-        RegisterPage(driver).registration()
+        RegisterPage(driver, targetSiteUrl, testEmail).registration()
         GoogleCreateAccountPage(driver, testName, testSoname, testPassword, testEmail).createAccount()
 
         val confirmText = EmailVerifyPage(driver).getConfirmationText()

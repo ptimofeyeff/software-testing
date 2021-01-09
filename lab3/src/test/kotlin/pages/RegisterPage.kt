@@ -6,16 +6,18 @@ import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 
 class RegisterPage(
-    private val driver: WebDriver
+    private val driver: WebDriver,
+    private val targetSiteUrl: String,
+    private val email: String
 ) {
 
     fun registration() {
         WebDriverWait(driver, 10)
             .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input)[1]")))
-            .sendKeys("testLab.com")
+            .sendKeys(targetSiteUrl)
 
         driver.findElement(By.xpath("(//input)[2]"))
-            .sendKeys("jirediv919@aranelab.com")
+            .sendKeys(email)
 
         WebDriverWait(driver, 10)
             .until(ExpectedConditions.elementToBeClickable(By.xpath("(//material-icon)[3]")))

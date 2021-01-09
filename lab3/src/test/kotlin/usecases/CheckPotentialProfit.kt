@@ -1,5 +1,7 @@
 package usecases
 
+import data.Category
+import data.Region
 import helpers.RunWithChrome
 import helpers.RunWithFirefox
 import org.junit.jupiter.api.Assertions
@@ -15,10 +17,9 @@ class CheckPotentialProfit {
     @RunWithChrome
     @RunWithFirefox
     fun `it display potential profit of user`(driver: WebDriver) {
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS)
 
         val mainPage = MainPage(driver)
-        mainPage.calcProfit()
+        mainPage.calcProfit(Category.VEHICLE, Region.NorthAmerica)
 
         Assertions.assertEquals("Ваш потенциальный годовой доход*", mainPage.resultProfit.text)
 

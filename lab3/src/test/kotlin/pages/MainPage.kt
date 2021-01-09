@@ -1,10 +1,14 @@
 package pages
 
+import data.Category
+import data.Region
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
+import org.openqa.selenium.support.ui.ExpectedConditions
+import org.openqa.selenium.support.ui.WebDriverWait
 
 class MainPage(
     private val driver: WebDriver
@@ -24,13 +28,16 @@ class MainPage(
         PageFactory.initElements(driver, this)
     }
 
-    fun calcProfit() {
+    fun calcProfit(category: Category, region: Region) {
         cookieOkBtn.click()
         driver.findElement(By.xpath("//button[@aria-label='Выберите регион']")).click()
-        driver.findElement(By.xpath("//button[text()='Северная Америка']")).click()
+        driver.findElement(By.xpath("//button[text()='${region.value}']")).click()
         driver.findElement(By.xpath("//button[@aria-label='Выберите категорию']")).click()
-        driver.findElement(By.xpath("//button[text()='Люди и общество']")).click()
-        driver.findElement(By.xpath("//button[text()='Рассчитать']")).click()
+        driver.findElement(By.xpath("//button[text()='${category.value}']")).click()
+
+        WebDriverWait(driver,10)
+            .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Рассчитать']")))
+            .click()
     }
 
     fun startWork() {

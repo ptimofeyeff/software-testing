@@ -16,13 +16,16 @@ class MainPage(
     @FindBy(xpath = "//div[@class='ytp-time-display notranslate' and string-length(@style)=0]//span[@class='ytp-time-current']")
     lateinit var currentPlayingTime: WebElement
 
+    @FindBy(xpath = "//span[@class='cookieBarButtons']//a[text()='ОК']")
+    lateinit var cookieOkBtn: WebElement
+
     init {
         driver.get("https://www.google.com/adsense/")
         PageFactory.initElements(driver, this)
     }
 
     fun calcProfit() {
-        driver.findElement(By.xpath("//span[@class='cookieBarButtons']//a[text()='ОК']")).click()
+        cookieOkBtn.click()
         driver.findElement(By.xpath("//button[@aria-label='Выберите регион']")).click()
         driver.findElement(By.xpath("//button[text()='Северная Америка']")).click()
         driver.findElement(By.xpath("//button[@aria-label='Выберите категорию']")).click()
@@ -32,6 +35,12 @@ class MainPage(
 
     fun startWork() {
         driver.findElement(By.xpath("(//a[@href='https://www.google.com/adsense/signup'])[1]")).click()
+    }
+
+    fun getSolutionsPage(): SolutionsPage {
+        cookieOkBtn.click()
+        driver.findElement(By.xpath("(//a[text()='Решения'])[1]")).click()
+        return SolutionsPage(driver)
     }
 
     fun watchSuccessStories() {

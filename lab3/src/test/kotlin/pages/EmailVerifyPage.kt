@@ -13,7 +13,7 @@ class EmailVerifyPage(
         WebDriverWait(driver, 10)
             .until(ExpectedConditions.urlContains("https://accounts.google.com/signup/v2/webverifyemail"))
 
-        return driver.findElement(By.xpath("//div[@class='PrDSKc']")).getAttribute("innerText")
+        return driver.findElement(By.xpath("//div[@class='PrDSKc']")).getAttribute("innerText").trim()
     }
 
 

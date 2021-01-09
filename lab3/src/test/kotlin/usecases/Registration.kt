@@ -27,10 +27,10 @@ class Registration {
         GoogleCreateAccountPage(driver, testName, testSoname, testPassword, testEmail).createAccount()
 
         val confirmText = EmailVerifyPage(driver).getConfirmationText()
-        Assertions.assertEquals("""
-            Введите код подтверждения, отправленный на адрес $testEmail. Если письма нет во входящих, проверьте папку "Спам".
-        """.trimIndent(), confirmText)
-
+        Assertions.assertEquals(
+            """Введите код подтверждения, отправленный на адрес $testEmail. Если письма нет во входящих, проверьте папку "Спам".""",
+            confirmText
+        )
         Thread.sleep(1000)
         driver.quit()
     }

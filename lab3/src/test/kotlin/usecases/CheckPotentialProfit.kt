@@ -23,7 +23,6 @@ class CheckPotentialProfit {
 
         Assertions.assertEquals("Ваш потенциальный годовой доход*", mainPage.resultProfit.text)
 
-        Thread.sleep(1000)
         driver.quit()
     }
 }

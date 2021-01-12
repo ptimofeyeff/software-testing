@@ -14,7 +14,7 @@ class Registration {
 
     private val testName = "Pavel"
     private val testSoname = "Timofeev"
-    private val testEmail = "labTest@test.com"
+    private val testEmail = "labTest2@test.com"
     private val testPassword = "testPassword"
     private val targetSiteUrl = "testLab.com"
 
@@ -32,7 +32,7 @@ class Registration {
             """Введите код подтверждения, отправленный на адрес $testEmail. Если письма нет во входящих, проверьте папку "Спам".""",
             confirmText
         )
-        Thread.sleep(1000)
+
         driver.quit()
     }
 }

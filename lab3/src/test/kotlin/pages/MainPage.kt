@@ -34,7 +34,7 @@ class MainPage(
         driver.findElement(By.xpath("//button[text()='${region.value}']")).click()
         driver.findElement(By.xpath("//button[@aria-label='Выберите категорию']")).click()
         driver.findElement(By.xpath("//button[text()='${category.value}']")).click()
-
+        Thread.sleep(1000)
         WebDriverWait(driver,10)
             .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Рассчитать']")))
             .click()
@@ -48,6 +48,12 @@ class MainPage(
         cookieOkBtn.click()
         driver.findElement(By.xpath("(//a[text()='Решения'])[1]")).click()
         return SolutionsPage(driver)
+    }
+
+    fun getResourcePage(): ResourcePage {
+        cookieOkBtn.click()
+        driver.findElement(By.xpath("(//a[text()='Ресурсы'])[1]")).click()
+        return ResourcePage(driver)
     }
 
     fun watchSuccessStories() {

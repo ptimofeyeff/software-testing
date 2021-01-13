@@ -2,13 +2,13 @@ package pages
 
 import data.Category
 import data.Region
-import org.openqa.selenium.By
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
+import org.openqa.selenium.*
+import org.openqa.selenium.interactions.Actions
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
+
 
 class MainPage(
     private val driver: WebDriver
@@ -56,13 +56,26 @@ class MainPage(
         return ResourcePage(driver)
     }
 
+    fun getReferencePage(): ReferencePage {
+        cookieOkBtn.click()
+
+        Actions(driver).sendKeys(Keys.END).perform()
+        Thread.sleep(500)
+
+        driver.findElement(By.xpath("//a[text()='Справочный центр AdSense']")).click()
+        driver.windowHandles.forEach {
+            if (it != driver.windowHandle) driver.switchTo().window(it)
+        }
+
+        return ReferencePage(driver)
+    }
+
     fun watchSuccessStories() {
         val successStories = driver.findElement(By.xpath("//a[@class='h-c-header__nav-li-link' and text()='Истории успеха']"))
         val watchVideo = driver.findElement(By.xpath("//a[@class='h-c-link h-c-link--video ng-isolate-scope']"))
         successStories.click()
         watchVideo.click()
     }
-
 
 }
 

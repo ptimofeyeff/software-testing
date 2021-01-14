@@ -11,7 +11,7 @@ class Registration {
 
     private val testName = "Pavel"
     private val testSoname = "Timofeev"
-    private val testEmail = "labTest4@test.com"
+    private val testEmail = "labTest6@test.com"
     private val testPassword = "testPassword"
     private val targetSiteUrl = "testLab.com"
 

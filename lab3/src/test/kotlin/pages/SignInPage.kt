@@ -26,4 +26,23 @@ class SignInPage(
         return GoogleCreateAccountPage(driver)
     }
 
+    fun getAuthPage(email: String, password: String): AuthorizedUserPage {
+        WebDriverWait(driver, 10)
+            .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type='email']")))
+            .sendKeys(email)
+
+        WebDriverWait(driver, 10)
+            .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@jsname='LgbsSe']")))
+            .click()
+
+        WebDriverWait(driver, 10)
+            .until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@type='password']")))
+            .sendKeys(password)
+
+        WebDriverWait(driver, 10)
+            .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@jsname='LgbsSe']")))
+            .click()
+
+        return AuthorizedUserPage(driver)
+    }
 }

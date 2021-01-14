@@ -2,12 +2,14 @@ package pages
 
 import data.Category
 import data.Region
-import org.openqa.selenium.*
+import helpers.waitForClick
+import org.openqa.selenium.By
+import org.openqa.selenium.Keys
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebElement
 import org.openqa.selenium.interactions.Actions
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
-import org.openqa.selenium.support.ui.ExpectedConditions
-import org.openqa.selenium.support.ui.WebDriverWait
 
 
 class MainPage(
@@ -38,12 +40,7 @@ class MainPage(
         driver.findElement(By.xpath("//button[@aria-label='Выберите категорию']")).click()
         driver.findElement(By.xpath("//button[text()='${category.value}']")).click()
 
-        while (true) {
-            try {
-                driver.findElement(By.xpath("//button[text()='Рассчитать']")).click()
-                break
-            } catch (e: ElementClickInterceptedException) { }
-        }
+        waitForClick(driver.findElement(By.xpath("//button[text()='Рассчитать']")))
 
     }
 
@@ -68,15 +65,7 @@ class MainPage(
         cookieOkBtn.click()
 
         Actions(driver).sendKeys(Keys.END).perform()
-
-        while (true) {
-            try {
-                driver.findElement(By.xpath("//a[text()='Справочный центр AdSense']")).click()
-                break
-            } catch (e: ElementClickInterceptedException) {
-            }
-        }
-
+        waitForClick(driver.findElement(By.xpath("//a[text()='Справочный центр AdSense']")))
 
         driver.windowHandles.forEach {
             if (it != driver.windowHandle) driver.switchTo().window(it)

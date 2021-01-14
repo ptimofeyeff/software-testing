@@ -1,5 +1,6 @@
 package pages
 
+import helpers.waitForClickToAnotherPage
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.PageFactory
@@ -20,10 +21,7 @@ class SignInPage(
             .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Создать аккаунт']")))
             .click()
 
-        try {
-            while (true)
-                driver.findElement(By.xpath("//div[text()='Для себя']")).click()
-        } catch (e: Exception) {}
+        waitForClickToAnotherPage(driver, "//div[text()='Для себя']")
 
         return GoogleCreateAccountPage(driver)
     }

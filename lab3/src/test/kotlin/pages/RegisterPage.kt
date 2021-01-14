@@ -6,12 +6,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 
 class RegisterPage(
-    private val driver: WebDriver,
-    private val targetSiteUrl: String,
-    private val email: String
+    private val driver: WebDriver
 ) {
 
-    fun registration() {
+    fun registration(targetSiteUrl: String, email: String): GoogleCreateAccountPage {
         WebDriverWait(driver, 10)
             .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//input)[1]")))
             .sendKeys(targetSiteUrl)
@@ -25,5 +23,7 @@ class RegisterPage(
 
         driver.findElement(By.xpath("//material-button[@debugid='submit-button']"))
             .click()
+
+        return GoogleCreateAccountPage(driver)
     }
 }

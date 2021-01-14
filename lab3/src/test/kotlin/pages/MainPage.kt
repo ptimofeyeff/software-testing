@@ -23,6 +23,9 @@ class MainPage(
     @FindBy(xpath = "//span[@class='cookieBarButtons']//a[text()='ОК']")
     lateinit var cookieOkBtn: WebElement
 
+    @FindBy(xpath = "(//a[text()='Войти'])[1]")
+    lateinit var signInBtn: WebElement
+
     init {
         driver.get("https://www.google.com/adsense/")
         PageFactory.initElements(driver, this)
@@ -40,8 +43,9 @@ class MainPage(
             .click()
     }
 
-    fun startWork() {
+    fun startWork(): RegisterPage {
         driver.findElement(By.xpath("(//a[@href='https://www.google.com/adsense/signup'])[1]")).click()
+        return RegisterPage(driver)
     }
 
     fun getSolutionsPage(): SolutionsPage {
@@ -68,6 +72,11 @@ class MainPage(
         }
 
         return ReferencePage(driver)
+    }
+
+    fun getSignInPage(): SignInPage {
+        signInBtn.click()
+        return SignInPage(driver)
     }
 
     fun watchSuccessStories() {

@@ -37,10 +37,14 @@ class MainPage(
         driver.findElement(By.xpath("//button[text()='${region.value}']")).click()
         driver.findElement(By.xpath("//button[@aria-label='Выберите категорию']")).click()
         driver.findElement(By.xpath("//button[text()='${category.value}']")).click()
-        Thread.sleep(1000)
-        WebDriverWait(driver,10)
-            .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='Рассчитать']")))
-            .click()
+
+        while (true) {
+            try {
+                driver.findElement(By.xpath("//button[text()='Рассчитать']")).click()
+                break
+            } catch (e: ElementClickInterceptedException) { }
+        }
+
     }
 
     fun startWork(): RegisterPage {
@@ -64,9 +68,16 @@ class MainPage(
         cookieOkBtn.click()
 
         Actions(driver).sendKeys(Keys.END).perform()
-        Thread.sleep(500)
 
-        driver.findElement(By.xpath("//a[text()='Справочный центр AdSense']")).click()
+        while (true) {
+            try {
+                driver.findElement(By.xpath("//a[text()='Справочный центр AdSense']")).click()
+                break
+            } catch (e: ElementClickInterceptedException) {
+            }
+        }
+
+
         driver.windowHandles.forEach {
             if (it != driver.windowHandle) driver.switchTo().window(it)
         }

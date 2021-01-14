@@ -1,9 +1,6 @@
 package pages
 
-import org.openqa.selenium.By
-import org.openqa.selenium.JavascriptExecutor
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
+import org.openqa.selenium.*
 import org.openqa.selenium.support.FindBy
 import org.openqa.selenium.support.PageFactory
 
@@ -25,9 +22,14 @@ class SolutionsPage(
 
         val jsDriver = driver as JavascriptExecutor
         jsDriver.executeScript("arguments[0].scrollIntoView(true)", solutionDetailBtn)
-        Thread.sleep(500)
 
-        solutionDetailBtn.click()
+        while (true) {
+            try {
+                solutionDetailBtn.click()
+                break
+            } catch (e: ElementClickInterceptedException) {}
+        }
+
         return driver.findElement(By.xpath("(//div[@class='content'])[$advantageNumber]/h2"))
             .getAttribute("innerText").trim()
     }

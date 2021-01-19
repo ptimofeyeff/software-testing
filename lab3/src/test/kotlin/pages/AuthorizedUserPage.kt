@@ -28,12 +28,7 @@ class AuthorizedUserPage(
 
     fun sendFeedback(feedback: String): String {
 
-        waitForClickWithAction(driver, "//div[text()='Отзыв']") {
-            driver.findElement(By.xpath("//button[@aria-label='Главное меню']"))
-                .click()
-            WebDriverWait(driver, 1)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[text()='Отзыв']")))
-        }
+        selectOptionFromMainMenu("//div[text()='Отзыв']")
 
         val iframe = WebDriverWait(driver, 10)
             .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//iframe[@id='google-feedback-wizard']")))
@@ -52,5 +47,27 @@ class AuthorizedUserPage(
         return WebDriverWait(driver, 10)
             .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@key='thanks']")))
             .getAttribute("innerText")
+    }
+
+    fun getCurrentIncome(): String {
+        selectOptionFromMainMenu("//div[text()='Платежи']")
+
+        val iframe = WebDriverWait(driver, 10)
+            .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//iframe[@id='embedded-portal-containerIframe']")))
+
+        driver.switchTo().frame(iframe)
+
+        return WebDriverWait(driver, 10)
+            .until(ExpectedConditions.visibilityOfElementLocated(By.className("b3-balance-card-headline")))
+            .getAttribute("innerText")
+    }
+
+    private fun selectOptionFromMainMenu(optionXpath: String) {
+        waitForClickWithAction(driver, optionXpath) {
+            driver.findElement(By.xpath("//button[@aria-label='Главное меню']"))
+                .click()
+            WebDriverWait(driver, 1)
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(optionXpath)))
+        }
     }
 }

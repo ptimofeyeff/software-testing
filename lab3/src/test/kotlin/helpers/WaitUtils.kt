@@ -3,7 +3,6 @@ package helpers
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import java.lang.Exception
 
 fun waitForClick(element: WebElement) {
     while (true) {
@@ -27,6 +26,18 @@ fun waitForClickWithRefreshElement(driver: WebDriver, xpath: String) {
 fun waitForClickToAnotherPage(driver: WebDriver, xpath: String) {
     try {
         while (true)
-            driver.findElement(By.xpath(xpath)).click()
+            driver.findElement(By.xpath(xpath))
+                .click()
     } catch (e: Exception) { }
+}
+
+fun waitForClickWithAction(driver: WebDriver, xpath: String, action: () -> Unit) {
+    while (true) {
+        try {
+            action()
+            driver.findElement(By.xpath(xpath))
+                .click()
+            break
+        } catch (e: Exception) { }
+    }
 }

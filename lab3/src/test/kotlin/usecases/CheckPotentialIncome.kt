@@ -11,17 +11,17 @@ import pages.MainPage
 import java.util.concurrent.TimeUnit
 
 
-class CheckPotentialProfit {
+class CheckPotentialIncome {
 
     @ParameterizedTest
     @RunWithChrome
     @RunWithFirefox
-    fun `it display potential profit of user`(driver: WebDriver) {
+    fun `it display potential income of user`(driver: WebDriver) {
 
         val mainPage = MainPage(driver)
-        mainPage.calcProfit(Category.VEHICLE, Region.NorthAmerica)
+        mainPage.calcIncome(Category.VEHICLE, Region.NorthAmerica)
 
-        Assertions.assertEquals("Ваш потенциальный годовой доход*", mainPage.resultProfit.text)
+        Assertions.assertEquals("Ваш потенциальный годовой доход*", mainPage.resultIncome.text)
 
         driver.quit()
     }

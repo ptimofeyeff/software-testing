@@ -17,7 +17,7 @@ class MainPage(
 ) {
 
     @FindBy(xpath = "//div[@class='revenue-results-container']//h3")
-    lateinit var resultProfit: WebElement
+    lateinit var resultIncome: WebElement
 
     @FindBy(xpath = "//div[@class='ytp-time-display notranslate' and string-length(@style)=0]//span[@class='ytp-time-current']")
     lateinit var currentPlayingTime: WebElement
@@ -33,7 +33,7 @@ class MainPage(
         PageFactory.initElements(driver, this)
     }
 
-    fun calcProfit(category: Category, region: Region) {
+    fun calcIncome(category: Category, region: Region) {
         cookieOkBtn.click()
         driver.findElement(By.xpath("//button[@aria-label='Выберите регион']")).click()
         driver.findElement(By.xpath("//button[text()='${region.value}']")).click()

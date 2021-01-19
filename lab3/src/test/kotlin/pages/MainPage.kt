@@ -19,9 +19,6 @@ class MainPage(
     @FindBy(xpath = "//div[@class='revenue-results-container']//h3")
     lateinit var resultIncome: WebElement
 
-    @FindBy(xpath = "//div[@class='ytp-time-display notranslate' and string-length(@style)=0]//span[@class='ytp-time-current']")
-    lateinit var currentPlayingTime: WebElement
-
     @FindBy(xpath = "//span[@class='cookieBarButtons']//a[text()='ОК']")
     lateinit var cookieOkBtn: WebElement
 
@@ -79,12 +76,6 @@ class MainPage(
         return SignInPage(driver)
     }
 
-    fun watchSuccessStories() {
-        val successStories = driver.findElement(By.xpath("//a[@class='h-c-header__nav-li-link' and text()='Истории успеха']"))
-        val watchVideo = driver.findElement(By.xpath("//a[@class='h-c-link h-c-link--video ng-isolate-scope']"))
-        successStories.click()
-        watchVideo.click()
-    }
 
 }
 

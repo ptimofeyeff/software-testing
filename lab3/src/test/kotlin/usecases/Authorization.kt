@@ -1,5 +1,6 @@
 package usecases
 
+import data.TestCredentials
 import helpers.RunWithChrome
 import helpers.RunWithFirefox
 import org.junit.jupiter.api.Assertions
@@ -10,19 +11,16 @@ import pages.MainPage
 
 class Authorization {
 
-    private val testEmail = "jaheg53734@majorsww.com"
-    private val testPasswd = "testPasswd"
-
     @ParameterizedTest
     @RunWithChrome
     @RunWithFirefox
     fun authTest(driver: WebDriver) {
         val signInPage = MainPage(driver).getSignInPage()
-        val authPage = signInPage.getAuthPage(testEmail, testPasswd)
+        val authPage = signInPage.getAuthPage(TestCredentials.email, TestCredentials.password)
         val email = authPage.getAuthEmail()
         val title = authPage.getTitle()
 
-        Assertions.assertEquals(testEmail, email)
+        Assertions.assertEquals(TestCredentials.email, email)
         Assertions.assertEquals(title, "Главная страница")
 
         driver.quit()

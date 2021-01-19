@@ -1,5 +1,6 @@
 package usecases
 
+import data.TestCredentials
 import helpers.RunWithChrome
 import helpers.RunWithFirefox
 import org.junit.jupiter.api.Assertions
@@ -9,17 +10,14 @@ import pages.MainPage
 
 class GiveFeedback {
 
-    private val testEmail = "jaheg53734@majorsww.com"
-    private val testPasswd = "testPasswd"
     private val testFeedback = "testFeedback"
-
 
     @RunWithChrome
     @RunWithFirefox
     @ParameterizedTest
     fun `it display thanks text for submitting feedback`(driver: WebDriver) {
         val signInPage = MainPage(driver).getSignInPage()
-        val authPage = signInPage.getAuthPage(testEmail, testPasswd)
+        val authPage = signInPage.getAuthPage(TestCredentials.email, TestCredentials.password)
 
         val confirmText = authPage.sendFeedback(testFeedback)
 

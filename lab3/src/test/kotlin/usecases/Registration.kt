@@ -1,5 +1,6 @@
 package usecases
 
+import data.TestCredentials
 import helpers.RunWithChrome
 import helpers.RunWithFirefox
 import org.junit.jupiter.api.Assertions
@@ -9,24 +10,23 @@ import pages.MainPage
 
 class Registration {
 
-    private val testName = "Pavel"
-    private val testSoname = "Timofeev"
-    private val testEmail = "labTest6@test.com"
-    private val testPassword = "testPassword"
-    private val targetSiteUrl = "testLab.com"
-
     @ParameterizedTest
     @RunWithFirefox
     @RunWithChrome
     fun registerFromStartWorkButton(driver: WebDriver) {
 
         val registerPage = MainPage(driver).startWork()
-        val createAccountPage = registerPage.registration(targetSiteUrl, testEmail)
-        val emailVerifyPage = createAccountPage.createAccount(testName, testSoname, testPassword, testEmail)
+        val createAccountPage = registerPage.registration(TestCredentials.siteUrl, TestCredentials.nonRegEmail)
+        val emailVerifyPage = createAccountPage.createAccount(
+            TestCredentials.name,
+            TestCredentials.soname,
+            TestCredentials.password,
+            TestCredentials.nonRegEmail
+        )
 
         val confirmText = emailVerifyPage.getConfirmationText()
         Assertions.assertEquals(
-            """Введите код подтверждения, отправленный на адрес $testEmail. Если письма нет во входящих, проверьте папку "Спам".""",
+            """Введите код подтверждения, отправленный на адрес ${TestCredentials.nonRegEmail}. Если письма нет во входящих, проверьте папку "Спам".""",
             confirmText
         )
 
@@ -40,11 +40,16 @@ class Registration {
 
         val signInPage = MainPage(driver).getSignInPage()
         val googleCreateAccountPage = signInPage.getCreateAccountPage()
-        val emailVerifyPage = googleCreateAccountPage.createAccount(testName, testSoname, testPassword, testEmail)
+        val emailVerifyPage = googleCreateAccountPage.createAccount(
+            TestCredentials.name,
+            TestCredentials.soname,
+            TestCredentials.password,
+            TestCredentials.nonRegEmail
+        )
         val confirmText = emailVerifyPage.getConfirmationText()
 
         Assertions.assertEquals(
-            """Введите код подтверждения, отправленный на адрес $testEmail. Если письма нет во входящих, проверьте папку "Спам".""",
+            """Введите код подтверждения, отправленный на адрес ${TestCredentials.nonRegEmail}. Если письма нет во входящих, проверьте папку "Спам".""",
             confirmText
         )
 

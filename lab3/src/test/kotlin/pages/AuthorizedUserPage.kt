@@ -70,4 +70,18 @@ class AuthorizedUserPage(
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(optionXpath)))
         }
     }
+
+    fun getPersonalSettingsPage(): PersonalSettingsPage {
+        selectOptionFromMainMenu("//div[text()='Аккаунт']")
+
+        WebDriverWait(driver, 10)
+            .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[text()='Настройки']")))
+            .click()
+
+        WebDriverWait(driver, 10)
+            .until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[text()='Персональные настройки']")))
+            .click()
+
+        return PersonalSettingsPage(driver)
+    }
 }
